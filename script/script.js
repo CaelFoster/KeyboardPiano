@@ -1,4 +1,6 @@
-/*FAILURES BUT REFRENCED
+console.log('script.js loaded');
+
+/*FAILURES BUT REFRENCED, IGNORE THIS
 
 //const groupR = document.getElementById("R");
 //const originalFillColor = groupR.querySelector('rect').getAttribute('fill');
@@ -104,7 +106,12 @@ window.addEventListener("keyup", (event) => {
                    
 
 */
+
+
+//Code Starts Here
 const svg_data = document.querySelector("#svgData").contentDocument;
+
+
 
 const keys = {
   KeyA: svg_data.getElementById("A"),
@@ -161,6 +168,13 @@ const keys = {
   Tab: svg_data.getElementById("tab"),
   Backspace: svg_data.getElementById("BackSpace")
 };
+const keye = svg_data.getElementById('E');
+console.log(keye);
+console.log(keys);
+
+/*
+//This works but im trying to select my svg elements first
+
 
 for (const key in keys) {
   const button = keys[key];
@@ -180,5 +194,4 @@ for (const key in keys) {
       button.querySelector("rect").setAttribute("fill", originalFillColor);
     }
   });
-}
-
+}*/
