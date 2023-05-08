@@ -168,6 +168,7 @@ const keys = {
   Tab: svg_data.getElementById("tab"),
   Backspace: svg_data.getElementById("BackSpace")
 };
+
 const keye = svg_data.getElementById('E');
 console.log(keye);
 console.log(keys);
