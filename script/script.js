@@ -170,10 +170,10 @@ const keys = {
 };
 
 const keye = svg_data.getElementById('E');
-console.log(keye);
+
 console.log(keys);
 
-/*
+
 //This works but im trying to select my svg elements first
 
 
@@ -195,4 +195,4 @@ for (const key in keys) {
       button.querySelector("rect").setAttribute("fill", originalFillColor);
     }
   });
-}*/
+}
