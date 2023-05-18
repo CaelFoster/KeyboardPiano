@@ -118,8 +118,56 @@ const svg_data = document.querySelector("#svgData").contentDocument;
 console.log("got svg data");
 
 const keys = {
-  Digit1: svg_data.getElementById("cOne"),
-  Digit2: svg_data.getElementById("dOne"),
+  Digit1:{
+   button: svg_data.getElementById("cOne"),
+   sound:  document.getElementById("cOneSound")
+  },
+  Digit2:{
+    button: svg_data.getElementById("dOne"),
+    sound:  document.getElementById("dOneSound")
+  }, 
+  Digit3:{
+    button: svg_data.getElementById("eOne"),
+    sound:  document.getElementById("eOneSound")
+  },
+  Digit4:{
+    button: svg_data.getElementById("fOne"),
+    sound:  document.getElementById("fOneSound")
+  },
+  Digit5:{
+    button: svg_data.getElementById("gOne"),
+    sound:  document.getElementById("gOneSound")
+  },
+  Digit6:{
+    button: svg_data.getElementById("aOne"),
+    sound:  document.getElementById("aOneSound")
+  },
+  Digit7:{
+    button: svg_data.getElementById("bOne"),
+    sound:  document.getElementById("bOneSound")
+  },
+  Key1:{
+    button: svg_data.getElementById("cSharpOne"),
+    sound:  document.getElementById("cSharpOneSound")
+  },
+  Key2:{
+    button: svg_data.getElementById("dSharpOne"),
+    sound:  document.getElementById("dSharpOneSound")
+  },
+  Key4:{
+    button: svg_data.getElementById("fSharpOne"),
+    sound:  document.getElementById("fSharpOneSound")
+  },
+  Key5:{
+    button: svg_data.getElementById("gSharpOne"),
+    sound:  document.getElementById("gSharpOneSound")
+  },
+  Key6:{
+    button: svg_data.getElementById("aSharpOne"),
+    sound:  document.getElementById("aSharpOneSound")
+  }
+
+  /*
   Digit3: svg_data.getElementById("eOne"),
   Digit4: svg_data.getElementById("fOne"),
   Digit5: svg_data.getElementById("gOne"),
@@ -130,13 +178,15 @@ const keys = {
   Key4: svg_data.getElementById("fSharpOne"),
   Key5: svg_data.getElementById("gSharpOne"),
   Key6: svg_data.getElementById("aSharpOne")
+  */
 };
+
 console.log("got keys using svg data");
 
 const shiftedState = {};
 // for in loop
 for (const key in keys) {
-  const button = keys[key];
+  const {button, sound} = keys[key];
   const originalFillColor = button.querySelector('[id^="Rectangle"]').getAttribute("fill");
   const originalShiftFillColor = svg_data.querySelector("rect").getAttribute("fill");
   
@@ -149,10 +199,14 @@ for (const key in keys) {
     if (event.shiftKey && event.code === `Digit${key.slice(-1)}` && key.startsWith("Key") && shiftedState[key] === true) {
       console.log(button.id);
       button.querySelector("rect").setAttribute("fill", "red");
+      sound.currentTime = 0;
+      sound.play();
     }
     if(event.code === key && shiftedState[key] === false) {
       console.log(`${key}`);
       button.querySelector('[id^="Rectangle"]').setAttribute("fill", "red");
+      sound.currentTime = 0;
+      sound.play();
     }
   });
   window.addEventListener("keyup", (event) => {
