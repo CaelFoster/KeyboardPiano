@@ -2,16 +2,16 @@ console.log('script.js loaded');
 
 /*FAILURES BUT REFRENCED, IGNORE THIS
 
-//const groupR = document.getElementById("R");
+//const groupR = svg_data.getElementById("R");
 //const originalFillColor = groupR.querySelector('rect').getAttribute('fill');
-//const groupT = document.getElementById("T");
-const J = document.getElementById("J");
-const style = document.getElementById('J').style.display;
+//const groupT = svg_data.getElementById("T");
+const J = svg_data.getElementById("J");
+const style = svg_data.getElementById('J').style.display;
 if keyDown('j'){
   if(style==="none")
-    document.getElementById("J").style.display = "block";
+    svg_data.getElementById("J").style.display = "block";
   else
-    document.getElementById("J").style.display="none";
+    svg_data.getElementById("J").style.display="none";
 }
 /*const playSound = e => {
       let keyCode;
@@ -20,8 +20,8 @@ if keyDown('j'){
       } else {
         keyCode = e.target.getAttribute('data-key') || e.target.parentNode.getAttribute('data-key');
       }
-      const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
-      const key = document.querySelector(`div[data-key="${keyCode}"]`);
+      const audio = svg_data.querySelector(`audio[data-key="${keyCode}"]`);
+      const key = svg_data.querySelector(`div[data-key="${keyCode}"]`);
 
       if (!audio) return;
 
@@ -35,7 +35,7 @@ if keyDown('j'){
       e.target.classList.remove('playing');
     }
 
-    const keys = Array.from(document.querySelectorAll('.key'));
+    const keys = Array.from(svg_data.querySelectorAll('.key'));
     keys.forEach(key => {
       key.addEventListener('transitionend', removeTransition)
     });
@@ -109,7 +109,134 @@ window.addEventListener("keyup", (event) => {
 
 
 //Code Starts Here
+
+//reduces the risk in the java loading before the html (issue being that svg_data would be null)
+window.addEventListener("DOMContentLoaded", function() {
+console.log("DOM fully loaded and parsed");
+
 const svg_data = document.querySelector("#svgData").contentDocument;
+console.log("got svg data");
+
+const keys = {
+  Digit1: svg_data.getElementById("cOne"),
+  Digit2: svg_data.getElementById("dOne"),
+  Digit3: svg_data.getElementById("eOne"),
+  Digit4: svg_data.getElementById("fOne"),
+  Digit5: svg_data.getElementById("gOne"),
+  Digit6: svg_data.getElementById("aOne"),
+  Digit7: svg_data.getElementById("bOne"),
+  Key1: svg_data.getElementById("cSharpOne"),
+  Key2: svg_data.getElementById("dSharpOne"),
+  Key4: svg_data.getElementById("fSharpOne"),
+  Key5: svg_data.getElementById("gSharpOne"),
+  Key6: svg_data.getElementById("aSharpOne")
+};
+console.log("got keys using svg data");
+
+const shiftedState = {};
+// for in loop
+for (const key in keys) {
+  const button = keys[key];
+  const originalFillColor = button.querySelector('[id^="Rectangle"]').getAttribute("fill");
+  const originalShiftFillColor = svg_data.querySelector("rect").getAttribute("fill");
+  
+  shiftedState[key] = false;  
+  window.addEventListener("keydown", (event) => {
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+      shiftedState[key] = true;
+    }
+    //Digit${key.slice(-1)} cuts out the number after "Digit" / the last character in the key string and adds it to a new array, key.startsWith("Key") appends that number to the end of "Key"
+    if (event.shiftKey && event.code === `Digit${key.slice(-1)}` && key.startsWith("Key") && shiftedState[key] === true) {
+      console.log(button.id);
+      button.querySelector("rect").setAttribute("fill", "red");
+    }
+    if(event.code === key && shiftedState[key] === false) {
+      console.log(`${key}`);
+      button.querySelector('[id^="Rectangle"]').setAttribute("fill", "red");
+    }
+  });
+  window.addEventListener("keyup", (event) => {
+    if (event.code === key) {
+      button.querySelector('[id^="Rectangle"]').setAttribute("fill", originalFillColor);
+    }
+    if (event.code === `Digit${key.slice(-1)}` && key.startsWith("Key")) {
+     button.querySelector("rect").setAttribute("fill", originalShiftFillColor);
+    }
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+      shiftedState[key] = false;
+    }
+  });
+}
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+const svg_data = svg_data.querySelector("#svgData").contentDocument;
 
 
 
@@ -196,3 +323,4 @@ for (const key in keys) {
     }
   });
 }
+*/
