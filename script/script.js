@@ -116,7 +116,59 @@ console.log("DOM fully loaded and parsed");
 
 const svg_data = document.querySelector("#svgData").contentDocument;
 console.log("got svg data");
+const keys = {
+  Digit8:{
+    button: svg_data.getElementById("cTwo"),
+    sound:  document.getElementById("cTwoSound")
+  },
+  Digit9:{
+    button: svg_data.getElementById("dTwo"),
+    sound:  document.getElementById("dTwoSound")
+  },
+  Digit0:{
+    button: svg_data.getElementById("eTwo"),
+    sound:  document.getElementById("eTwoSound")
+  },
+  KeyQ:{
+    button: svg_data.getElementById("fTwo"),
+    sound:  document.getElementById("fTwoSound")
+  },
+  KeyW:{
+    button: svg_data.getElementById("gTwo"),
+    sound:  document.getElementById("gTwoSound")
+  },
+  KeyE:{
+    button: svg_data.getElementById("aTwo"),
+    sound:  document.getElementById("aTwoSound")
+  },
+  KeyR:{
+    button: svg_data.getElementById("bTwo"),
+    sound:  document.getElementById("bTwoSound")
+  },
+  UpperCaseQ:{
+    button: svg_data.getElementById("fSharpTwo"),
+    sound:  document.getElementById("fSharpTwoSound")
+  },
+  UpperCaseW:{
+    button: svg_data.getElementById("gSharpTwo"),
+    sound:  document.getElementById("gSharpTwoSound")
+  },
+  UpperCaseE:{
+    button: svg_data.getElementById("aSharpTwo"),
+    sound:  document.getElementById("aSharpTwoSound")
+  },
+  Key8:{
+    button: svg_data.getElementById("cSharpTwo"),
+    sound:  document.getElementById("cSharpTwoSound")
+  },
+  Key9:{
+    button: svg_data.getElementById("dSharpTwo"),
+    sound:  document.getElementById("dSharpTwoSound")
+  }
 
+};
+
+/*
 const keys = {
   Digit1:{
    button: svg_data.getElementById("cOne"),
@@ -166,7 +218,7 @@ const keys = {
     button: svg_data.getElementById("aSharpOne"),
     sound:  document.getElementById("aSharpOneSound")
   }
-
+*/
   /*
   Digit3: svg_data.getElementById("eOne"),
   Digit4: svg_data.getElementById("fOne"),
@@ -179,24 +231,26 @@ const keys = {
   Key5: svg_data.getElementById("gSharpOne"),
   Key6: svg_data.getElementById("aSharpOne")
   */
-};
-
+//};
+//could make a second object for the shifted keys where if shift is targeted, objects in keys is overidden by objects in shiftedKeys
 console.log("got keys using svg data");
 
 const shiftedState = {};
+
 // for in loop
 for (const key in keys) {
   const {button, sound} = keys[key];
   const originalFillColor = button.querySelector('[id^="Rectangle"]').getAttribute("fill");
   const originalShiftFillColor = svg_data.querySelector("rect").getAttribute("fill");
-  
   shiftedState[key] = false;  
   window.addEventListener("keydown", (event) => {
     if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
       shiftedState[key] = true;
     }
+    
     //Digit${key.slice(-1)} cuts out the number after "Digit" / the last character in the key string and adds it to a new array, key.startsWith("Key") appends that number to the end of "Key"
-    if (event.shiftKey && event.code === `Digit${key.slice(-1)}` && key.startsWith("Key") && shiftedState[key] === true) {
+    //&& shiftedState[key] === true at the end of if statement is uneccessary due to event.shiftKey
+    if (event.shiftKey && event.code === `Digit${key.slice(-1)}` && key.startsWith("Key")) {
       console.log(button.id);
       button.querySelector("rect").setAttribute("fill", "red");
       sound.currentTime = 0;
