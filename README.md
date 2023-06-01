@@ -7,7 +7,7 @@ heres the repo ^^
 https://www.figma.com/file/x5tAcEHAxoukbD8Xdx0AbB/keyboard-piano?type=design&node-id=0%3A1&t=amHeqbaVYeGdbEge-1
 heres the figma ^^
 
-52 key keyboard piano
+60 key keyboard piano
 
 5 octaves 
 
